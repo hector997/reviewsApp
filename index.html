@@ -1,0 +1,160 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>REVIEWS.AR</title>
+</head>
+<body class="grey lighten-3">
+
+  <!-- NAVBAR -->
+  <nav class="z-depth-0 grey lighten-4">
+    <div class="nav-wrapper " >
+      <a href="#" class="brand-logo">
+        <img src="images/logo.png" style="width: 180px; margin-top: -32px;">
+      </a>
+      
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        
+          <a class="logged-in right hide-on-med-and-down" >
+          <i href="#" class="modal-trigger large material-icons black-text text-darken-4" data-target="modal-account">account_circle</i>
+          </a>
+          <li class="logged-in">
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+          <li class="logged-in">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Creá tu Review</a>
+          </li>
+          <li class="logged-out">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+          </li>
+          <li class="logged-out">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Registrate</a>
+          </li>
+        </span>
+      </ul>
+    </div>
+  </nav>
+  <!--SEARCH BAR-->
+  <div class="container " >
+    <form >
+      <div class="input-field" >
+        <input id="search-bar" type="text" data-target="modal-results" onkeyup="search()" placeholder="Buscar" required>
+      </div>
+    </form>
+  </div>
+
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Registrate</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Direccion de Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Elegí tu contraseña</label>
+        </div>
+        <div class="input-field">
+            <input type="text" id="signup-bio" />
+            <label for="signup-bio">Contanos un poco de vos</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Registrate</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4><br />
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Direccion de Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Contraseña</label>
+        </div>
+        <h6 class="red-text text-darken-2 error-display" style="display: none;">comprobá tu usuario o contraseña</h6>
+        <button class="btn yellow darken-2 z-depth-0">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ACCOUNT MODAL-->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Detalles de tu cuenta</h4>
+      <div class="account-details"></div>
+    </div>
+  </div>
+
+  <!-- CREATE REVIEW MODAL -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h4>Crear Review</h4><br />
+      <form id="create-form">
+        <div class="input-field">
+          <input type="text" id="title" required>
+          <label for="title">Titulo del producto</label>
+        </div>
+        <div class="input-field">
+          <textarea id="content" class="materialize-textarea" required></textarea>
+          <label for="content">Review</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Crear</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- REVIEW LIST -->
+  <div class="container" style="margin-top: 40px;">
+    <p class="center-align">Acá vas a poder encontrar reviews de personas que ya usaron ese producto que vos estás por comprar!</p>
+    <ul id="results-ul" class="collapsible z-depth-0 guides" style="border: none;"></ul>
+  </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCvc6VTM5XxYqh1W25hMJn-NG-psKnR3zM",
+        authDomain: "recipes-51dc2.firebaseapp.com",
+        projectId: "recipes-51dc2",
+        storageBucket: "recipes-51dc2.appspot.com",
+        messagingSenderId: "23185393989",
+        appId: "1:23185393989:web:f480a434ae7479f0d3562c",
+        measurementId: "G-7DL4P7FDP4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    //Make firestore & auth references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    //update settings
+    db.settings({ timestampsInSnapshots: true});
+    </script>
+    
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/index.js"></script>
+</body>
+</html>
